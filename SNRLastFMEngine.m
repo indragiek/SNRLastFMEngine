@@ -11,12 +11,12 @@
  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 #import "SNRLastFMEngine.h"
-#import "EMKeychainItem.h"
+#import "INKeychainAccess.h"
 #import "JSONKit.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
-#define K_ITEM_SERVICE @"Last.fm (com.indragie.SNRAudioEngine)"
+#define K_ITEM_SERVICE @"Last.fm (com.indragie.SNRLastFMEngine)"
 
 #define ERROR_DOMAIN @"LastFMErrorDomain"
 #define DEFAULT_ERROR_CODE 9999
@@ -90,13 +90,8 @@
 	if (_username != newUsername) {
 		[_username release];
 		_username = [newUsername retain];
-        EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:K_ITEM_SERVICE withUsername:_username];
-        if (keychainItem) {
-            NSString *key = keychainItem.password;
-            if (key && (![key isEqualToString:@""])) {
-                self.sk = key;
-            }
-        }
+        NSString *key = [INKeychainAccess passwordForAccount:_username serviceName:K_ITEM_SERVICE error:nil];
+        if ([key length]) { self.sk = key; }
 	}
 }
 
@@ -235,15 +230,13 @@
 
 + (BOOL)userHasStoredCredentials:(NSString*)user
 {
-    EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:K_ITEM_SERVICE withUsername:user];
-    NSString *key = keychainItem.password;
-	return (key && (![key isEqualToString:@""]));
+    NSString *key = [INKeychainAccess passwordForAccount:user serviceName:K_ITEM_SERVICE error:nil];
+	return [key length] != 0;
 }
 
 + (void)removeCredentialsForUser:(NSString*)user
 {
-    EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:K_ITEM_SERVICE withUsername:user];
-    [keychainItem removeFromKeychain];
+    [INKeychainAccess removeKeychainItemForAccount:user serviceName:K_ITEM_SERVICE error:nil];
 }
 
 
@@ -352,18 +345,15 @@
 
 - (void)_storeCredentialsWithUsername:(NSString*)username sessionKey:(NSString*)key error:(NSError**)error
 {
-    EMGenericKeychainItem *keychainItem = [EMGenericKeychainItem genericKeychainItemForService:K_ITEM_SERVICE withUsername:username];
-    if (!keychainItem) {
-        keychainItem = [EMGenericKeychainItem addGenericKeychainItemForService:K_ITEM_SERVICE withUsername:username password:key];
+    NSError *keychainError = nil;
+    if (![INKeychainAccess passwordForAccount:username serviceName:K_ITEM_SERVICE error:nil]) {
+        [INKeychainAccess addKeychainItemForAccount:username withPassword:key serviceName:K_ITEM_SERVICE error:&keychainError];
+    } else {
+        [INKeychainAccess setPassword:key forAccount:username serviceName:K_ITEM_SERVICE error:&keychainError];
     }
-    keychainItem.password = key;
-    if (!keychainItem && error) {
-        NSString *message = @"Failed to save credentials to keychain."; // If the item failed to save, create an error
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:message, @"message", nil];
-        *error = [[NSError errorWithDomain:ERROR_DOMAIN code:DEFAULT_ERROR_CODE userInfo:userInfo] retain];
+    if (keychainError && error) {
+        *error = [keychainError retain];
     }
     self.username = username;
 }
-
-
 @end

@@ -14,10 +14,10 @@
 		035FD1D913C96232001B211D /* ExampleAppAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035FD1D813C96232001B211D /* ExampleAppAppDelegate.m */; };
 		035FD1DC13C96232001B211D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 035FD1DA13C96232001B211D /* MainMenu.xib */; };
 		035FD1EA13C962F4001B211D /* SNRLastFMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 035FD1E913C962F4001B211D /* SNRLastFMEngine.m */; };
-		035FD1EE13C96308001B211D /* EMKeychainItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 035FD1ED13C96308001B211D /* EMKeychainItem.m */; };
 		035FD1F213C96316001B211D /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 035FD1F113C96316001B211D /* JSONKit.m */; };
 		035FD1F813C966C1001B211D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035FD1F713C966C1001B211D /* Security.framework */; };
 		035FD1FB13C96EE3001B211D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 035FD1FA13C96EE3001B211D /* ScriptingBridge.framework */; };
+		035FD28913CA7BC7001B211D /* INKeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 035FD26F13CA7BC7001B211D /* INKeychainAccess.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,13 +36,13 @@
 		035FD1DB13C96232001B211D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		035FD1E813C962F4001B211D /* SNRLastFMEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SNRLastFMEngine.h; path = ../SNRLastFMEngine.h; sourceTree = "<group>"; };
 		035FD1E913C962F4001B211D /* SNRLastFMEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SNRLastFMEngine.m; path = ../SNRLastFMEngine.m; sourceTree = "<group>"; };
-		035FD1EC13C96308001B211D /* EMKeychainItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EMKeychainItem.h; path = ../EMKeychain/EMKeychainItem.h; sourceTree = "<group>"; };
-		035FD1ED13C96308001B211D /* EMKeychainItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EMKeychainItem.m; path = ../EMKeychain/EMKeychainItem.m; sourceTree = "<group>"; };
 		035FD1F013C96316001B211D /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = ../JSONKit/JSONKit.h; sourceTree = "<group>"; };
 		035FD1F113C96316001B211D /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = ../JSONKit/JSONKit.m; sourceTree = "<group>"; };
 		035FD1F713C966C1001B211D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		035FD1F913C96EDC001B211D /* iTunes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iTunes.h; sourceTree = "<group>"; };
 		035FD1FA13C96EE3001B211D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		035FD26E13CA7BC7001B211D /* INKeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INKeychainAccess.h; sourceTree = "<group>"; };
+		035FD26F13CA7BC7001B211D /* INKeychainAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INKeychainAccess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +62,8 @@
 		035FD1B613C96232001B211D = {
 			isa = PBXGroup;
 			children = (
+				035FD24713CA7BC7001B211D /* INKeychainAccess */,
 				035FD1EF13C9630A001B211D /* JSONKit */,
-				035FD1EB13C962FF001B211D /* EMKeychain */,
 				035FD1E613C962E9001B211D /* SNRLastFMEngine */,
 				035FD1CB13C96232001B211D /* ExampleApp */,
 				035FD1C413C96232001B211D /* Frameworks */,
@@ -133,15 +133,6 @@
 			name = SNRLastFMEngine;
 			sourceTree = "<group>";
 		};
-		035FD1EB13C962FF001B211D /* EMKeychain */ = {
-			isa = PBXGroup;
-			children = (
-				035FD1EC13C96308001B211D /* EMKeychainItem.h */,
-				035FD1ED13C96308001B211D /* EMKeychainItem.m */,
-			);
-			name = EMKeychain;
-			sourceTree = "<group>";
-		};
 		035FD1EF13C9630A001B211D /* JSONKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +140,16 @@
 				035FD1F113C96316001B211D /* JSONKit.m */,
 			);
 			name = JSONKit;
+			sourceTree = "<group>";
+		};
+		035FD24713CA7BC7001B211D /* INKeychainAccess */ = {
+			isa = PBXGroup;
+			children = (
+				035FD26E13CA7BC7001B211D /* INKeychainAccess.h */,
+				035FD26F13CA7BC7001B211D /* INKeychainAccess.m */,
+			);
+			name = INKeychainAccess;
+			path = ../INKeychainAccess;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,8 +218,8 @@
 				035FD1D213C96232001B211D /* main.m in Sources */,
 				035FD1D913C96232001B211D /* ExampleAppAppDelegate.m in Sources */,
 				035FD1EA13C962F4001B211D /* SNRLastFMEngine.m in Sources */,
-				035FD1EE13C96308001B211D /* EMKeychainItem.m in Sources */,
 				035FD1F213C96316001B211D /* JSONKit.m in Sources */,
+				035FD28913CA7BC7001B211D /* INKeychainAccess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

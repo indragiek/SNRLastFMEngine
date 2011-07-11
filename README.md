@@ -1,6 +1,6 @@
 ## SNRLastFMEngine: A modern block-based Objective-C interface to the Last.fm API
 
-`SNRLastFMEngine` is designed with the intent of making it a simple to integrate the Last.fm API into your Cocoa application. It uses modern block-based callbacks to allow you to call Last.fm API methods and handle the response within that same chunk of code.
+`SNRLastFMEngine` is designed with the intent of making it a simple to integrate the Last.fm API into your iOS or OS X application. It uses modern block-based callbacks to allow you to call Last.fm API methods and handle the response within that same chunk of code.
 
 ## Adding SNRLastFMEngine to your project
 
@@ -13,15 +13,17 @@ Read on for more information on authentication and actually using the API.
  
 ## Dependencies
 
-* [JSONKit](https://github.com/johnezang/JSONKit) - Used for speedy JSON parsing of Last.fm API requests. `JSONKit` has been added as a `git` submodule. You can automatically clone the `JSONKit` repo for use with the project by running `git submodule init` and then `git submodule update`.
-* [EMKeychain](http://extendmac.com/EMKeychain/) - Objective-C interface to the Mac OS X keychain that is used to store credentials. The latest version of the `EMKeychain` source is included with the project.
+* [JSONKit](https://github.com/johnezang/JSONKit) - Used for speedy JSON parsing of Last.fm API requests. 
+* [INKeychainAccess](https://github.com/indragiek/INKeychainAccess) - Objective-C interface to the Mac OS X keychain that is used to store credentials. 
+
+Both of these have been added to the project as `git` submodules. You can automatically clone the repositories for use with the project by running `git submodule init` and then `git submodule update`.
 
 ## Authenticating with Last.fm
 
 Last.fm provides [two possible](http://www.last.fm/api/authentication) authentication methods that are usable for desktop applications. Ironically, the "web application" authentication method is the most convenient and easy to implement in a desktop application. That said, Last.fm doesn't condone the use of the web app authentication method for desktop apps, so use at your own discretion. Authentication isn't required for all API calls. The [Last.fm API](http://www.last.fm/api/) docs detail which methods require authentication.
 
 **Web Authentication Method**
-(demonstrated in example app)
+(demonstrated in example app, Mac)
 
 1. Register a custom URL handler for your app
 2. Call `SNRLastFMEngine`'s `+webAuthenticationURLWithCallbackURL` using application's custom handler URL (e.g. `x-com-yourapp://auth`) and open the returned URL in a `WebView` or web browser
@@ -29,11 +31,17 @@ Last.fm provides [two possible](http://www.last.fm/api/authentication) authentic
 4. Call `-retrieveAndStoreSessionKeyWithToken:completionHandler:` to authorize the Last.fm engine. In the completion block, store the returned username in your application preferences.
 
 **Desktop Authentication Method**
+(Mac)
 
 1. Fetch a request token from Last.fm using `SNRLastFMEngine`'s `-retrieveAuthenticationToken:` method
 2. Call `+authenticationURLWithToken:` to retrieve an authentication URL
 3. Open this URL in either a `WebView` or in the user's web browser, which will then prompt them to allow your application to access their account
 4. Call `-retrieveAndStoreSessionKeyWithToken:completionHandler:` to authorize the Last.fm engine. In the completion block, store the returned username in your application preferences.
+
+**Mobile Authentication Method**
+(iOS)
+
+1. Call `SNRLastFMEngine`'s `-retrieveAndStoreSessionKeyWithUsername:password:completionHandler` with the user's credentials to authorize the Last.fm engine. Upon successful authentication, store the username in your application preferences.
 
 After authentication, you are now ready to make authenticated API calls. For subsequent launches of your app, you can just set the `username` property to the username returned during the authentication process and `SNRLastFMEngine` will automatically read the session key from the keychain and configure itself for use.
 
@@ -76,7 +84,7 @@ I've included an example app with the project that demonstrates the following:
 
 ## iOS Compatibility
 
-This project is being used exclusively on the Mac right now, so it hasn't been tested at all on iOS. `SNRLastFMEngine` itself doesn't use anything that isn't available on iOS and therefore should work, but `EMKeychain` is only compatible with Mac OS X so the keychain access code needs to be replaced for iOS. I hope to implement complete iOS support in the near future, but if anyone manages to do it themselves, then a pull request would be appreciated.
+This project is being used exclusively on the Mac right now, so it hasn't been tested at all on iOS. `SNRLastFMEngine` itself doesn't use anything that isn't available on iOS and therefore should work, but **do extensive testing** before using `SNRLastFMEngine` in your iOS project. There is also currently no example application for iOS. I hope to add one soon.
 
 ## Contributing
 
