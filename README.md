@@ -5,7 +5,7 @@
 ## Adding SNRLastFMEngine to your project
 
 1. Link against `Security.framework`. If you are compiling for OS X 10.7, you may also need to link against `libCommonCrypto.dylib`
-2. Add the required dependencies (`JSONKit` and `EMKeychain`, see below)
+2. Add the required dependencies (`JSONKit` and `INKeychainAccess`, see below)
 3. Set the API key and API secret in `SNRLastFMEngine.h` according to your [API account info](http://www.last.fm/api/account)
 4. Add the `SNRLastFMEngine` class and Last.fm away!
 
