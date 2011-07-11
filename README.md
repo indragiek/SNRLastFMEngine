@@ -14,7 +14,7 @@ Read on for more information on authentication and actually using the API.
 ## Dependencies
 
 * [JSONKit](https://github.com/johnezang/JSONKit) - Used for speedy JSON parsing of Last.fm API requests. 
-* [INKeychainAccess](https://github.com/indragiek/INKeychainAccess) - Objective-C interface to the Mac OS X keychain that is used to store credentials. 
+* [INKeychainAccess](https://github.com/indragiek/INKeychainAccess) - Objective-C interface to the Mac OS X/iOS keychain that is used to store credentials. 
 
 Both of these have been added to the project as `git` submodules. You can automatically clone the repositories for use with the project by running `git submodule init` and then `git submodule update`.
 
