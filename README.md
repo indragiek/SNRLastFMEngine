@@ -20,7 +20,7 @@ Both of these have been added to the project as `git` submodules. You can automa
 
 ## Authenticating with Last.fm
 
-Last.fm provides [two possible](http://www.last.fm/api/authentication) authentication methods that are usable for desktop applications. Ironically, the "web application" authentication method is the most convenient and easy to implement in a desktop application. That said, Last.fm doesn't condone the use of the web app authentication method for desktop apps, so use at your own discretion. Authentication isn't required for all API calls. The [Last.fm API](http://www.last.fm/api/) docs detail which methods require authentication.
+Last.fm provides [three possible](http://www.last.fm/api/authentication) authentication methods. Ironically, the "web application" authentication method is the most convenient and easy to implement in a desktop application. That said, Last.fm doesn't condone the use of the web app authentication method for desktop apps, so use at your own discretion. Mobile authentication is the simplest out of the three as it allows you to bypass the process of retrieving an authentication token and allows you to get a session key immediately. Authentication isn't required for all API calls. The [Last.fm API](http://www.last.fm/api/) docs detail which methods require authentication.
 
 **Web Authentication Method**
 (demonstrated in example app, Mac)
