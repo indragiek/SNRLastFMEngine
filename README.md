@@ -1,4 +1,12 @@
-## SNRLastFMEngine: A modern block-based Objective-C interface to the Last.fm API
+## This code is deprecated.
+
+The newest revision of this code is available as [SMKLastFMClient](https://github.com/indragiek/SNRMusicKit/tree/master/Other%20Services), part of [SNRMusicKit](https://github.com/indragiek/SNRMusicKit/), an all in one framework for building content rich music apps for OS X and iOS.
+
+**The code in this repository will not be maintained going forward and shouldn't be used**.
+
+
+
+## ~~SNRLastFMEngine: A modern block-based Objective-C interface to the Last.fm API~~
 
 `SNRLastFMEngine` is designed with the intent of making it a simple to integrate the Last.fm API into your iOS or OS X application. It uses modern block-based callbacks to allow you to call Last.fm API methods and handle the response within that same chunk of code.
 
